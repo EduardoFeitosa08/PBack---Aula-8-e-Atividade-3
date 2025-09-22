@@ -53,6 +53,39 @@ app.get('/v1/estado/:uf', function(request, response){
     response.json(estado)
 })
 
+app.get('/v1/capital/:uf', function(request, response){
+    let sigla = request.params.uf
+    let capital = dados.getCapitalBySigla(sigla)
+
+    response.status(capital.statuscode)
+    response.json(capital)
+})
+
+app.get('/v1/regiao/', function(request, response){
+    let regiao = request.query.regiao
+    let regiaoEstados = dados.getEstadosByRegiao(regiao)
+
+    response.status(regiaoEstados.statuscode)
+    response.json(regiaoEstados)
+})
+
+app.get('/v1/pais/capital/', function(request, response){
+    let pais = request.query.pais
+    let paisCapitais = dados.getEstadoIsCapitalByCountry(pais)
+
+    response.status(paisCapitais.statuscode)
+    response.json(paisCapitais)
+})
+
+app.get('/v1/estado/cidades/:uf', function(request, response){
+    let sigla = request.params.uf
+    let cidades = dados.getCidadesBySigla(sigla)
+
+    response.status(cidades.statuscode)
+    response.json(cidades)
+})
+
+
 //Start da API
 app.listen(PORT, function(){
     console.log('API aguardando requisições...')
